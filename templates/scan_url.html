@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Scan URL{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3"><i class="bi bi-link-45deg"></i> Scan a URL</h1>
+<div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> This tool does <strong>not</strong> open submitted links. It only analyzes the text of the URL.</div>
+<div class="card pg-card p-4">
+  <form method="post" action="{{ url_for('analyze_url_route') }}" class="scan-form">
+    <label for="url" class="form-label fw-semibold">URL to analyze (http:// or https:// only)</label>
+    <input type="text" class="form-control form-control-lg" id="url" name="url" placeholder="https://example.com" maxlength="2048" value="{{ value }}" required autocomplete="off">
+    <div class="form-check mt-3">
+      <input class="form-check-input" type="checkbox" id="save_history" name="save_history">
+      <label class="form-check-label" for="save_history">Save anonymous scan statistics for this session/project demo.</label>
+      <div class="form-text">Unchecked by default. Only a salted hash of the domain, score and rule names are stored, never the full URL. See <a href="{{ url_for('privacy') }}">Privacy</a>.</div>
+    </div>
+    <div class="mt-3">
+      <button type="submit" class="btn btn-primary"><span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span> <span class="btn-label">Analyze URL</span></button>
+      <button type="reset" class="btn btn-outline-secondary">Clear</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

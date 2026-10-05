@@ -1,0 +1,9 @@
+Flask>=3.0,<4.0
+requests>=2.31,<3.0
+python-dotenv>=1.0,<2.0
+validators>=0.22,<1.0
+tldextract>=5.1,<6.0
+Pillow>=10.0
+pyzbar>=0.1.9,<0.2
+gunicorn>=21.2,<24.0
+pytest>=8.0,<9.0

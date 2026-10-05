@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Privacy{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Privacy and data handling</h1>
+<div class="card pg-card p-4"><ul class="mb-0">
+<li>Submitted URLs are analyzed in memory and are not fetched or opened.</li>
+<li>Uploaded QR images are decoded in memory and are not stored.</li>
+<li>Logs record only the score, category and rule count, never full URLs or API keys.</li>
+<li>Scan history is <strong>off by default</strong>. If you tick the box, only a scan ID, time, score, category, a salted SHA-256 hash of the registered domain and rule names are saved. You can delete everything on the <a href="{{ url_for('history') }}">History</a> page.</li>
+<li>If the operator enables the optional Google Safe Browsing check, the submitted URL is sent to Google for that lookup.</li>
+<li>Never type passwords, OTPs, UPI PINs or card numbers into this tool.</li></ul></div>
+{% endblock %}

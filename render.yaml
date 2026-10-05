@@ -1,0 +1,22 @@
+# Render Blueprint. Secrets are NOT stored here: set them in the Render dashboard.
+services:
+  - type: web
+    name: phishguard
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: FLASK_ENV
+        value: production
+      - key: ENABLE_SAFE_BROWSING
+        value: "false"
+      - key: FLASK_SECRET_KEY
+        generateValue: true
+      - key: DOMAIN_HASH_SALT
+        generateValue: true
+      - key: GOOGLE_SAFE_BROWSING_API_KEY
+        sync: false

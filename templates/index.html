@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero text-center p-5 mb-4 rounded-4">
+  <i class="bi bi-shield-check display-3"></i>
+  <h1 class="display-5 fw-bold mt-2">PhishGuard</h1>
+  <p class="lead mb-1">Think Before You Click.</p>
+  <p class="mb-4">Phishing URL and QR-Code Safety Analyzer</p>
+  <a class="btn btn-primary btn-lg m-1" href="{{ url_for('scan_url') }}"><i class="bi bi-link-45deg"></i> Scan a URL</a>
+  <a class="btn btn-outline-light btn-lg m-1" href="{{ url_for('scan_qr') }}"><i class="bi bi-qr-code-scan"></i> Scan a QR code</a>
+</section>
+<div class="alert alert-info"><i class="bi bi-info-circle"></i> PhishGuard never opens the links you submit. It only reads the link text and gives an educational risk assessment, not a safety guarantee.</div>
+<div class="row g-3">
+  <div class="col-md-4"><div class="card pg-card h-100 p-3"><h2 class="h5"><i class="bi bi-search"></i> Explainable results</h2><p>Every point in the score comes with a plain-language reason.</p></div></div>
+  <div class="col-md-4"><div class="card pg-card h-100 p-3"><h2 class="h5"><i class="bi bi-qr-code"></i> QR safety</h2><p>Decode QR images on the server and analyze the link inside before you visit it.</p></div></div>
+  <div class="col-md-4"><div class="card pg-card h-100 p-3"><h2 class="h5"><i class="bi bi-mortarboard"></i> Learn and practice</h2><p>Read the <a href="{{ url_for('awareness') }}">awareness guide</a> and take the <a href="{{ url_for('quiz') }}">quiz</a>.</p></div></div>
+</div>
+{% endblock %}

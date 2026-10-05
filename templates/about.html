@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">About PhishGuard</h1>
+<div class="card pg-card p-4 mb-3"><p><strong>PhishGuard</strong> is an educational, defensive cybersecurity project. It analyzes the <em>text</em> of URLs and QR-code contents using transparent, rule-based checks.</p>
+<p class="mb-0">Think Before You Click.</p></div>
+<div class="card pg-card p-4 mb-3"><h2 class="h5">Limitations</h2><ul class="mb-0">
+<li>This tool provides an educational risk assessment, not a safety guarantee.</li>
+<li>It never visits a link, so it cannot see the page content, certificates or redirects.</li>
+<li>A low score does not mean a link is safe; a high score does not prove it is malicious.</li>
+<li>The optional threat-database check only covers threats already known to that database.</li>
+<li>Rules are simple heuristics and can produce false positives and false negatives.</li></ul></div>
+<div class="card pg-card p-4"><h2 class="h5">Ethical use</h2><p class="mb-0">Use PhishGuard to protect yourself and others. Do not use it to build or test phishing campaigns.</p></div>
+{% endblock %}

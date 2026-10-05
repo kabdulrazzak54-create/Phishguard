@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Bad request{% endblock %}
+{% block content %}
+<div class="text-center py-5"><h1 class="display-4">400</h1><p class="lead">Bad request</p><p>The request could not be processed. Please check your input and try again.</p>
+<a class="btn btn-primary" href="{{ url_for('index') }}">Back to Home</a></div>
+{% endblock %}

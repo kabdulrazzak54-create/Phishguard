@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Quiz{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3"><i class="bi bi-patch-question"></i> Phishing quiz</h1>
+<p class="text-muted">All URLs here are fictional and safe. Nothing is opened.</p>
+<div id="quiz" class="card pg-card p-4">
+  <div id="quiz-progress" class="small text-muted mb-2"></div>
+  <h2 id="quiz-question" class="h5"></h2>
+  <div id="quiz-options" class="d-grid gap-2 my-3"></div>
+  <div id="quiz-feedback" class="alert d-none" role="status"></div>
+  <button id="quiz-next" class="btn btn-primary d-none">Next</button>
+</div>
+<div id="quiz-result" class="card pg-card p-4 text-center d-none">
+  <h2 class="h4">Quiz complete</h2><p class="display-6 mb-3" id="quiz-score"></p>
+  <button id="quiz-restart" class="btn btn-primary">Restart quiz</button>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/quiz.js') }}"></script>{% endblock %}

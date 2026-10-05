@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Result{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Risk report</h1>
+{% if source == 'qr' %}
+<div class="card pg-card p-3 mb-3"><h2 class="h6">Decoded QR content (plain text, not clickable)</h2>
+  <pre class="url-box mb-0">{{ qr_text }}</pre></div>
+{% endif %}
+{% if not risk %}
+<div class="alert alert-info">The QR content is not an http/https URL, so no URL analysis was run. Never enter sensitive information based on QR text you do not trust.</div>
+{% else %}
+<div class="card pg-card p-4 mb-3">
+  <h2 class="h6">Analyzed URL (plain text, not clickable)</h2>
+  <pre class="url-box">{{ features.original_url }}</pre>
+  <div class="d-flex align-items-center flex-wrap gap-3">
+    <div class="display-4 fw-bold">{{ risk.score }}<span class="fs-5">/100</span></div>
+    <span class="badge fs-5 badge-{{ risk.color }}">{{ risk.label }}</span>
+  </div>
+  <div class="progress mt-3" style="height: 22px" role="progressbar" aria-label="Risk score" aria-valuenow="{{ risk.score }}" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar bar-{{ risk.color }}" style="width: {{ risk.score }}%">{{ risk.score }}</div></div>
+  <p class="small text-muted mt-3 mb-0">This tool provides an educational risk assessment, not a safety guarantee.</p>
+</div>
+
+<div class="card pg-card p-4 mb-3">
+  <h2 class="h5">Why this result?</h2>
+  {% if risk.rules %}
+  <div class="table-responsive"><table class="table align-middle">
+    <thead><tr><th>Rule</th><th>Points</th><th>Severity</th><th>Explanation</th></tr></thead>
+    <tbody>{% for r in risk.rules %}
+      <tr><td><code>{{ r.rule }}</code></td><td>+{{ r.points }}</td><td>{{ r.severity|capitalize }}</td><td>{{ r.message }}</td></tr>
+    {% endfor %}</tbody></table></div>
+  {% else %}<p>No warning signs were triggered by the local checks. No known threat was detected by the enabled checks.</p>{% endif %}
+</div>
+
+<div class="card pg-card p-4 mb-3">
+  <h2 class="h5">Known threat database result</h2>
+  <p class="mb-1">{{ external.message }}</p>
+  {% if external.status in ('match', 'no_match') %}<p class="small text-muted mb-0">The submitted URL was sent to the external provider for this lookup.</p>{% endif %}
+</div>
+
+<div class="card pg-card p-4 mb-3">
+  <h2 class="h5">What you should do</h2>
+  <ul class="mb-0">{% for tip in risk.recommendations %}<li>{{ tip }}</li>{% endfor %}</ul>
+</div>
+
+<div class="card pg-card p-4 mb-3">
+  <h2 class="h5">Technical details</h2>
+  <div class="table-responsive"><table class="table table-sm">
+    <tr><th>Scheme</th><td>{{ features.scheme }}</td></tr>
+    <tr><th>Hostname</th><td>{{ features.hostname }}</td></tr>
+    <tr><th>Registered domain</th><td>{{ features.registered_domain }}</td></tr>
+    <tr><th>Subdomain count</th><td>{{ features.subdomain_count }}</td></tr>
+    <tr><th>Dots in hostname</th><td>{{ features.dot_count }}</td></tr>
+    <tr><th>Hyphens in hostname</th><td>{{ features.hyphen_count }}</td></tr>
+    <tr><th>Total URL length</th><td>{{ features.url_length }}</td></tr>
+    <tr><th>Path length</th><td>{{ features.path_length }}</td></tr>
+    <tr><th>Query parameters</th><td>{{ features.query_param_count }}</td></tr>
+    <tr><th>Uses HTTPS</th><td>{{ 'Yes' if features.uses_https else 'No' }}</td></tr>
+    <tr><th>Hostname is an IP address</th><td>{{ 'Yes' if features.is_ip_address else 'No' }}</td></tr>
+    <tr><th>Port</th><td>{{ features.port if features.port else 'default' }}{% if features.non_standard_port %} (non-standard){% endif %}</td></tr>
+    <tr><th>URL shortener</th><td>{{ 'Yes' if features.is_shortener else 'No' }}</td></tr>
+    <tr><th>Suspicious keywords</th><td>{{ features.suspicious_keywords|join(', ') or 'None' }}</td></tr>
+    <tr><th>Punycode (xn--)</th><td>{{ 'Yes' if features.has_punycode else 'No' }}</td></tr>
+    <tr><th>Contains @</th><td>{{ 'Yes' if features.has_at_symbol else 'No' }}</td></tr>
+    <tr><th>Percent-encoded characters</th><td>{{ features.percent_encoding_count }}{% if features.excessive_percent_encoding %} (excessive){% endif %}</td></tr>
+    <tr><th>Unusual patterns</th><td>{{ features.unusual_patterns|join(', ') or 'None' }}</td></tr>
+  </table></div>
+</div>
+{% if saved %}<div class="alert alert-secondary">Anonymous statistics saved (no URL stored). <a href="{{ url_for('history') }}">View history</a></div>{% endif %}
+{% endif %}
+<a class="btn btn-primary" href="{{ url_for('scan_url') }}">Scan another URL</a>
+<a class="btn btn-outline-primary" href="{{ url_for('scan_qr') }}">Scan a QR code</a>
+{% endblock %}
